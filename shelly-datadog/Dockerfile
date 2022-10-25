@@ -1,6 +1,6 @@
 FROM library/node:18-slim
 WORKDIR /app
-COPY package.json ./
-RUN npm install
-COPY index.js ./
+COPY package.json yarn.lock ./
+RUN yarn
+COPY *.js ./
 ENTRYPOINT ["node", "."]
