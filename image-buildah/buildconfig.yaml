@@ -1,6 +1,6 @@
 ---
 kind: BuildConfig
-apiVersion: build.dist.app/v1
+apiVersion: build.danopia.net/v1
 metadata:
   name: image-buildah
 spec:
