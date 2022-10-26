@@ -1,0 +1,20 @@
+---
+kind: BuildConfig
+apiVersion: build.dist.app/v1
+metadata:
+  name: image-buildah
+spec:
+  triggers:
+  - type: ConfigChange
+  - type: ImageChange
+  source:
+    type: Git
+    git:
+      uri: https://github.com/danopia/kubernetes-images
+    contextDir: image-buildah
+  strategy:
+    type: Docker
+  output:
+    to:
+      kind: DockerImage
+      name: image-buildah
