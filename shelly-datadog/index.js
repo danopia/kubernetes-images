@@ -94,9 +94,9 @@ shelly.on('update-device-status', (deviceId, status) => {
       payload['relay.watt_hours.sum'] = payload['relay.watt_minutes.sum'] / 60;
     }
 
-    if (payload['relay.watts']) {
-      console.log(new Date(), deviceSerial, payload['relay.watts'], 'watts');
-    }
+    // if (payload['relay.watts']) {
+    //   console.log(new Date(), deviceSerial, payload['relay.watts'], 'watts');
+    // }
     reportPayload(deviceSerial, 'plug-s', payload);
 
   } else if (deviceType == 'SHBTN-2') {
