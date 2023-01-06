@@ -1,4 +1,5 @@
 FROM denoland/deno:alpine-1.29.1
+RUN apk add --no-cache curl
 WORKDIR /src/app
 
 ADD _lib.ts ./
