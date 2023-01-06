@@ -8,8 +8,9 @@ function sleep(mins: number) { return new Promise(ok => setTimeout(ok, mins * 60
 
 export async function start() {
   await Promise.race([
-    runMetricsLoop(() =>                      grabYearMetrics(2021),  5 * slownessFactor, 'aoc_stats'),
-    sleep( 2).then(() => runMetricsLoop(() => grabYearMetrics(2020), 30 * slownessFactor, 'aoc_stats')),
+    runMetricsLoop(() =>                      grabYearMetrics(2022),  5 * slownessFactor, 'aoc_stats'),
+    sleep( 2).then(() => runMetricsLoop(() => grabYearMetrics(2021), 30 * slownessFactor, 'aoc_stats')),
+    sleep( 4).then(() => runMetricsLoop(() => grabYearMetrics(2020), 30 * slownessFactor, 'aoc_stats')),
     sleep( 7).then(() => runMetricsLoop(() => grabYearMetrics(2019), 30 * slownessFactor, 'aoc_stats')),
     sleep(12).then(() => runMetricsLoop(() => grabYearMetrics(2018), 30 * slownessFactor, 'aoc_stats')),
     sleep(17).then(() => runMetricsLoop(() => grabYearMetrics(2017), 30 * slownessFactor, 'aoc_stats')),
