@@ -52,21 +52,21 @@ async function grabUserMetrics(): Promise<MetricSubmission[]> {
 
     // console.log({channel, lastData});
 
-    metrics.push({
+    if (channel.unerrored >= lastData.unerrored) metrics.push({
       metric_name: `docsis.codewords`,
       tags: [`docsis_channel:${channel.channel_id}`, `docsis_codeword:unerrored`],
       points: [{value: channel.unerrored - lastData.unerrored}],
       interval: 60,
       metric_type: 'count',
     });
-    metrics.push({
+    if (channel.correctable >= lastData.correctable) metrics.push({
       metric_name: `docsis.codewords`,
       tags: [`docsis_channel:${channel.channel_id}`, `docsis_codeword:correctable`],
       points: [{value: channel.correctable - lastData.correctable}],
       interval: 60,
       metric_type: 'count',
     });
-    metrics.push({
+    if (channel.uncorrectable >= lastData.uncorrectable) metrics.push({
       metric_name: `docsis.codewords`,
       tags: [`docsis_channel:${channel.channel_id}`, `docsis_codeword:uncorrectable`],
       points: [{value: channel.uncorrectable - lastData.uncorrectable}],
