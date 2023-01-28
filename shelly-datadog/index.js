@@ -34,6 +34,12 @@ shelly.on('update-device-status', (deviceId, status) => {
       config_changed: fields.get(9103),
     };
 
+    if (payload.sensor_error) {
+      delete payload.temperature_c;
+      delete payload.temperature_f;
+      delete payload.humidity;
+    }
+
     const prevCfgChg = prevTotals.get(`${deviceSerial}-config_changed`) ?? -1;
     prevTotals.set(`${deviceSerial}-config_changed`, payload['config_changed']);
     if (payload['config_changed'] == prevCfgChg) {
