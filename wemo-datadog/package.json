@@ -1,0 +1,11 @@
+{
+  "name": "wemo-datadog",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "type": "module",
+  "dependencies": {
+    "@datadog/datadog-api-client": "^1",
+    "wemo-client": "^0.15"
+  }
+}
