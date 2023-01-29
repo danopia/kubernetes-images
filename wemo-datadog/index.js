@@ -6,7 +6,8 @@ const wemo = new Wemo();
 
 const macs = [];
 function discover() {
-  return wemo.discover(function(deviceInfo) {
+  return wemo.discover(function(err, deviceInfo) {
+    if (err) console.error(`Discover err: ${err.message}`);
     const {macAddress} = deviceInfo;
     if (macs.includes(macAddress)) {
       return;
