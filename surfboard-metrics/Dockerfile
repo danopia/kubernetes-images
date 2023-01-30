@@ -1,10 +1,10 @@
-FROM denoland/deno:alpine-1.29.1
+FROM denoland/deno:alpine-1.30.0
 WORKDIR /src/app
 
-ADD _lib.ts ./
-RUN ["deno", "check", "_lib.ts"]
+ADD dep.ts ./
+RUN ["deno", "cache", "dep.ts"]
 
 ADD *.ts ./
-RUN ["deno", "check", "signal.ts"]
+RUN ["deno", "check", "mod.ts"]
 
-ENTRYPOINT ["deno", "run", "--allow-net", "--allow-env", "--allow-run=curl", "--cached-only", "signal.ts"]
+ENTRYPOINT ["deno", "run", "--allow-read", "--allow-net", "--allow-env", "--cached-only", "mod.ts"]

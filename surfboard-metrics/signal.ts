@@ -1,18 +1,6 @@
-import { runMetricsLoop, MetricSubmission, fetch } from "./_lib.ts";
-export async function start() {
-  await runMetricsLoop(grabUserMetrics, 1, 'signal');
-}
-if (import.meta.main) start();
+import { fetch, OpenMetric } from "./dep.ts";
 
-type ChannelCodewords = {
-  channel_id: number;
-  unerrored: number;
-  correctable: number;
-  uncorrectable: number;
-};
-let lastCodewords = new Array<ChannelCodewords>();
-
-async function grabUserMetrics(): Promise<MetricSubmission[]> {
+export async function fetchSignalMetrics(): Promise<OpenMetric[]> {
   const resp = await fetch('http://192.168.100.1/cmSignalData.htm');
   if (!resp.ok) {
     console.error(`cmSignalData.htm gave HTTP ${resp.status}`);
@@ -25,8 +13,6 @@ async function grabUserMetrics(): Promise<MetricSubmission[]> {
     upstreamSection,
     codewordSection,
   ] = body.split('<CENTER>').slice(1);
-
-  const metrics = new Array<MetricSubmission>();
 
   const regex = /^(?:<TD>(\d+)&nbsp; ?<\/TD>)+<\/TR>/gm;
   const matches = codewordSection.matchAll(regex);
@@ -42,41 +28,22 @@ async function grabUserMetrics(): Promise<MetricSubmission[]> {
     };
   });
 
-  // console.log(channels);
+  console.log(new Date, 'uncorrectable', channels
+    .map(x => x.uncorrectable)
+    .reduce((a,b) => a+b, 0));
 
-  for (const channel of channels) {
-    const lastData = lastCodewords.find(x => x.channel_id == channel.channel_id);
-    if (!lastData) continue;
-
-    // console.log({channel, lastData});
-
-    if (channel.unerrored >= lastData.unerrored) metrics.push({
-      metric_name: `docsis.codewords`,
-      tags: [`docsis_channel:${channel.channel_id}`, `docsis_codeword:unerrored`],
-      points: [{value: channel.unerrored - lastData.unerrored}],
-      interval: 60,
-      metric_type: 'count',
-    });
-    if (channel.correctable >= lastData.correctable) metrics.push({
-      metric_name: `docsis.codewords`,
-      tags: [`docsis_channel:${channel.channel_id}`, `docsis_codeword:correctable`],
-      points: [{value: channel.correctable - lastData.correctable}],
-      interval: 60,
-      metric_type: 'count',
-    });
-    if (channel.uncorrectable >= lastData.uncorrectable) metrics.push({
-      metric_name: `docsis.codewords`,
-      tags: [`docsis_channel:${channel.channel_id}`, `docsis_codeword:uncorrectable`],
-      points: [{value: channel.uncorrectable - lastData.uncorrectable}],
-      interval: 60,
-      metric_type: 'count',
-    });
-
-  }
-
-  lastCodewords = channels;
-
-  console.log(new Date, 'uncorrectable', channels.map(x => x.uncorrectable).reduce((a,b) => a+b, 0));
-
-  return metrics;
+  return [{
+    prefix: 'docsis_codewords',
+    type: 'counter',
+    values: new Map(channels.flatMap(x => [
+      [`_total{docsis_channel="${x.channel_id}",docsis_codeword="unerrored"}`, x.unerrored],
+      [`_total{docsis_channel="${x.channel_id}",docsis_codeword="correctable"}`, x.correctable],
+      [`_total{docsis_channel="${x.channel_id}",docsis_codeword="uncorrectable"}`, x.uncorrectable],
+    ])),
+  }];
 }
+
+
+
+
+
