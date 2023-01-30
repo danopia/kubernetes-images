@@ -1,4 +1,4 @@
-import { runMetricsLoop, MetricSubmission, readAll } from "./_lib.ts";
+import { runMetricsLoop, MetricSubmission, fetch } from "./_lib.ts";
 export async function start() {
   await runMetricsLoop(grabUserMetrics, 1, 'signal');
 }
@@ -13,14 +13,12 @@ type ChannelCodewords = {
 let lastCodewords = new Array<ChannelCodewords>();
 
 async function grabUserMetrics(): Promise<MetricSubmission[]> {
-  // const body = await fetch('http://192.168.100.1/cmSignalData.htm', headers('text/html')).then(x => x.text());
-  const proc = Deno.run({
-    cmd: ['curl', 'http://192.168.100.1/cmSignalData.htm'],
-    stdin: 'null',
-    stdout: 'piped',
-  });
-  const body = new TextDecoder().decode(await readAll(proc.stdout));
-  await proc.status();
+  const resp = await fetch('http://192.168.100.1/cmSignalData.htm');
+  if (!resp.ok) {
+    console.error(`cmSignalData.htm gave HTTP ${resp.status}`);
+    return [];
+  }
+  const body = await resp.text();
 
   const [
     downstreamSection,

@@ -3,7 +3,7 @@ import type { MetricSubmission } from "https://deno.land/x/datadog_api@v0.1.3/v1
 import { fixedInterval } from "https://crux.land/4MC9JG#fixed-interval@v1";
 
 export type { MetricSubmission };
-export { readAll } from "https://deno.land/std@0.170.0/streams/read_all.ts";
+export { fetch } from "https://deno.land/x/socket_fetch@v0.1/mod.ts";
 
 const datadog = DatadogApi.fromEnvironment(Deno.env);
 
