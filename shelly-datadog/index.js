@@ -1,3 +1,11 @@
+// try preventing EAI_AGAIN dns errors
+import http from 'node:http';
+import https from 'node:https';
+import CacheableLookup from 'cacheable-lookup';
+const cacheable = new CacheableLookup();
+cacheable.install(http.globalAgent);
+cacheable.install(https.globalAgent);
+
 import ShellyIot from 'shelly-iot';
 import { hostname } from 'node:os';
 import { client as Datadog, v1 as DatadogV1 } from '@datadog/datadog-api-client';
