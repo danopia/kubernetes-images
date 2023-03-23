@@ -3,7 +3,7 @@
 import { Sha256 } from "./deps.ts";
 let lastHash = '';
 
-import { runMetricsLoop, MetricSubmission, headers, fetch } from "./_lib.ts";
+import { runMetricsLoop, MetricSubmission, headers } from "./_lib.ts";
 export async function start() {
   await runMetricsLoop(grabUserMetrics, 30, 'poweroutages_us');
 }
