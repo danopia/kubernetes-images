@@ -154,7 +154,7 @@ async function reportPayload(deviceSerial, deviceType, payload) {
     tags.push(`sensor_location:bedroom`);
   }
   if (deviceSerial == '4022D8895F23') {
-    tags.push(`sensor_name:washing machine`);
+    tags.push(`sensor_name:humidifier`);
     tags.push(`sensor_location:bedroom`);
     // tags.push(`sensor_name:fridge`);
     // tags.push(`sensor_location:living room`);
