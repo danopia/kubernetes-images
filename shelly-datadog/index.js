@@ -138,10 +138,8 @@ async function reportPayload(deviceSerial, deviceType, payload) {
     `shelly_product:${deviceType}`,
   ];
   if (deviceSerial == '701364') {
-    tags.push(`sensor_name:fridge`);
-    tags.push(`sensor_location:fridge`);
-//     tags.push(`sensor_name:living room`);
-//     tags.push(`sensor_location:living room`);
+    tags.push(`sensor_name:living room`);
+    tags.push(`sensor_location:living room`);
   }
   if (deviceSerial == '7013A6') {
     tags.push(`sensor_name:balcony`);
