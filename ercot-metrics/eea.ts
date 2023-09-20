@@ -7,7 +7,7 @@ export async function start() {
 if (import.meta.main) start();
 
 async function grabUserMetrics(): Promise<MetricSubmission[]> {
-  const body = await fetch(`http://127.0.0.1:5102/content/alerts/conservation_state.js`, headers('application/javascript')).then(x => x.text());
+  const body = await fetch(`https://www.ercot.com/content/alerts/conservation_state.js`, headers('application/javascript')).then(x => x.text());
 
   const line = body.split(/\r?\n/).find(x => x.startsWith('eeaLevel = '));
   if (!line) {

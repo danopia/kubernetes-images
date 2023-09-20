@@ -8,7 +8,7 @@ export async function start() {
 if (import.meta.main) start();
 
 async function grabUserMetrics(): Promise<MetricSubmission[]> {
-  const body = await fetch(`http://127.0.0.1:5102/content/cdr/html/real_time_spp`, headers('text/html')).then(x => x.text());
+  const body = await fetch(`https://www.ercot.com/content/cdr/html/real_time_spp`, headers('text/html')).then(x => x.text());
 
   const sections = body.split('</table>')[0].split('<tr>').slice(1).map(x => x.split(/[<>]/).filter((_, idx) => idx % 4 == 2));
   const header = sections[0]?.slice(2, -1) ??[];
