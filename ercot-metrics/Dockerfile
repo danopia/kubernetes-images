@@ -1,4 +1,4 @@
-FROM registry.ipv6.docker.com/denoland/deno:alpine-1.31.2
+FROM denoland/deno:alpine-1.31.2
 ENV DENO_NO_UPDATE_CHECK=1
 WORKDIR /src/app
 
