@@ -1,4 +1,4 @@
-import "./tracer.ts";
+import "https://deno.land/x/observability@v0.7.0/preconfigured/from-environment.ts";
 
 import { start as startAncillary } from "./ancillary.ts";
 // import { start as startEea } from "./eea.ts";

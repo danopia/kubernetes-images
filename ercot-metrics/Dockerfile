@@ -1,4 +1,4 @@
-FROM denoland/deno:alpine-1.31.2
+FROM denoland/deno:alpine-1.35.0
 ENV DENO_NO_UPDATE_CHECK=1
 WORKDIR /src/app
 
@@ -8,4 +8,4 @@ RUN ["deno", "check", "deps.ts"]
 ADD *.ts ./
 RUN ["deno", "check", "mod.ts"]
 
-ENTRYPOINT ["deno", "run", "--unstable", "--allow-net", "--allow-hrtime", "--allow-env", "--cached-only", "mod.ts"]
+ENTRYPOINT ["deno", "run", "--unstable", "--allow-net", "--allow-hrtime", "--allow-env", "--allow-sys", "--cached-only", "mod.ts"]
