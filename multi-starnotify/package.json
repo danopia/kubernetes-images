@@ -12,7 +12,7 @@
   "dependencies": {
     "aws-sdk": "^2.1354.0",
     "filesize": "^3.5.11",
-    "moment": "^2.29.4",
+    "moment": "^2.31.0",
     "moment-timezone": "^0.5.35",
     "multimatch": "^2.1.0",
     "node-fetch": "^2.6.7"
